@@ -2,15 +2,17 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
 from utils.logger import get_logger
+import asyncio
+from consumer import start_consumer
 
-
-logger = get_logger("notification-service")
+logger = get_logger("notifications-service")
 
 
 # Lifespan
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("Notification service starting up...")
+    asyncio.create_task(start_consumer())
     yield
     logger.info("Notification service shutting down...")
 

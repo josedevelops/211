@@ -8,7 +8,7 @@ from utils.logger import get_logger
 
 RABBITMQ_URL = os.getenv("RABBITMQ_URL")
 
-logger = get_logger("notifications-service")
+logger = get_logger("notification-service")
 
 
 async def start_consumer():

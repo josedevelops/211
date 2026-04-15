@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
 from utils.logger import get_logger
-
+from api.v1.requests import router as request_router
 
 logger = get_logger("gateway")
 
@@ -16,7 +16,8 @@ async def lifespan(app: FastAPI):
 
 
 # FastAPI App
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(lifespan=lifespan, redirect_slashes=False)
+app.include_router(request_router, prefix="/api/v1")
 
 
 # Custom Exception

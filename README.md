@@ -76,31 +76,31 @@ Used for fire‑and‑forget operations — e.g., notifications that should not 
 ### Installation
 
 1. Clone the repository
-\```bash
+```bash
 git clone https://github.com/yourusername/211.git
 cd 211
-\```
+```
 
 2. Configure environment
-\```bash
+```bash
 cp .env.example .env
 # Edit .env with your values
-\```
+```
 
 3. Start all services
-\```bash
+```bash
 docker compose up --build
-\```
+```
 
 4. Verify all services are running
-\```bash
+```bash
 docker ps
-\```
+```
 
 ### Test the API
 
 Submit a service request:
-\```bash
+```bash
 curl -X POST http://localhost:8000/api/v1/requests/ \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer test-token" \
@@ -110,16 +110,16 @@ curl -X POST http://localhost:8000/api/v1/requests/ \
     "issue": "Broken streetlight",
     "contact": "408-555-0192"
   }'
-\```
+```
 
 Expected response:
-\```json
+```json
 {
   "correlation_id": "uuid",
   "status": "pending",
   "message": "Your request has been received and is being processed"
 }
-\```
+```
 ## API Reference
 
 ### Submit a Service Request

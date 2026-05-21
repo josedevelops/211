@@ -1,3 +1,38 @@
+## System Architecture
+
+```mermaid
+flowchart TD
+    User(["Resident"])
+
+    subgraph Public["Public Layer"]
+        GW["API Gateway\nport 8000\nAuth · Routing · Orchestration"]
+    end
+
+    subgraph Services["Internal Services (not publicly exposed)"]
+        LS["Location Service\nNominatim Geocoding"]
+        RS["Request Service\nPersist & Audit"]
+        TS["Ticket Service\nLifecycle & Status"]
+        NS["Notification Service\nAsync Consumer"]
+    end
+
+    subgraph Data["Data Layer"]
+        PG[("PostgreSQL 16")]
+        RMQ["RabbitMQ Broker"]
+    end
+
+    User -->|"POST /api/v1/requests\nJWT Auth"| GW
+
+    GW -->|"REST — validate address"| LS
+    GW -->|"REST — create record"| RS
+    GW -->|"Publish event"| RMQ
+
+    RS --> PG
+    TS --> PG
+    RMQ -->|"Consume event"| NS
+```
+
+
+
 # 211 Civic Service Platform
 
 ## Overview

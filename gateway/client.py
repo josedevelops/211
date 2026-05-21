@@ -12,12 +12,13 @@ LOCATION_SERVICE_URL = os.getenv("LOCATION_SERVICE_URL")
 REQUEST_SERVICE_URL = os.getenv("REQUEST_SERVICE_URL")
 
 
-async def validate_address(address: str, correlation_id: str) -> Dict[str, Any]:
+async def validate_address(address: str, correlation_id: str, trace_id: str = "-") -> Dict[str, Any]:
     """
     Validate an address via location-service
     """
     headers = {
         "X-Correlation-ID": correlation_id,
+        "X-Trace-ID": trace_id,
         "Content-Type": "application/json",
     }
     try:
@@ -42,12 +43,13 @@ async def validate_address(address: str, correlation_id: str) -> Dict[str, Any]:
         raise
 
 
-async def create_request(payload: Dict[str, Any], user: str) -> Dict[str, Any]:
+async def create_request(payload: Dict[str, Any], user: str, trace_id: str = "-") -> Dict[str, Any]:
     """
     Create a request via the request-service.
     """
     headers = {
         "X-User": user,
+        "X-Trace-ID": trace_id,
         "Content-Type": "application/json",
     }
     try:

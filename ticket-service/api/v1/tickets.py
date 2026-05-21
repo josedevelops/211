@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from utils.logger import get_logger
 from schemas import TicketCreate, TicketResponse
 from services import TicketService
@@ -10,9 +10,10 @@ service = TicketService()
 
 
 @router.post("/", response_model=TicketResponse, status_code=202)
-async def create_ticket(payload: TicketCreate):
+async def create_ticket(payload: TicketCreate, request: Request = None):
+    trace_id = getattr(request.state, "trace_id", "-") if request else "-"
     try:
-        logger.info("POST /tickets | correlation=%s", payload.correlation_id)
+        logger.info("POST /tickets | trace_id=%s | correlation=%s", trace_id, payload.correlation_id)
         result = service.create_ticket(payload)
         return TicketResponse(
             correlation_id=result.correlation_id,

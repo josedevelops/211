@@ -28,7 +28,7 @@ async def submit_request(
     )
 
     # Step 3 - validate address
-    location = await validate_address(payload.address, correlation_id)
+    location = await validate_address(payload.address, correlation_id, trace_id)
 
     # Step 4 - build request payload and create request
     request_payload = {
@@ -41,7 +41,7 @@ async def submit_request(
         "issue": payload.issue,
         "contact": payload.contact,
     }
-    await create_request(request_payload, user["user_id"])
+    await create_request(request_payload, user["user_id"], trace_id)
 
     # Step 5 - publish notification
 

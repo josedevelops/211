@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from utils.logger import get_logger
 from schemas import ServiceRequestCreate, ServiceRequestResponse
 from services import RequestService
@@ -10,9 +10,10 @@ service = RequestService()
 
 
 @router.post("/", response_model=ServiceRequestResponse, status_code=202)
-async def create_request(payload: ServiceRequestCreate):
+async def create_request(payload: ServiceRequestCreate, request: Request = None):
+    trace_id = getattr(request.state, "trace_id", "-") if request else "-"
     try:
-        logger.info("POST /requests | correlation_id=%s", payload.correlation_id)
+        logger.info("POST /requests | trace_id=%s | correlation_id=%s", trace_id, payload.correlation_id)
         result = await service.create_request(payload)
         return ServiceRequestResponse(
             correlation_id=result.correlation_id,

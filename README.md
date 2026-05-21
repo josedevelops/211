@@ -183,15 +183,3 @@ Expected response:
 > Full implementation with token issuance, refresh tokens, and
 > revocation is planned for production.
 
-## Development Notes
-
-
-## Roadmap
-- [ ] Cloud deployment (AWS/GCP)
-- [ ] CI/CD pipeline
-- [ ] Full JWT authentication with refresh token rotation
-- [ ] Role-based access control (citizen vs admin vs field worker)
-- [ ] Department routing based on issue type and district
-- [ ] Real SMS/email notifications via Twilio/SendGrid
-- [ ] Citizen-facing status tracking endpoint
-- [ ] Admin dashboard for city workers

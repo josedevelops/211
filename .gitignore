@@ -24,3 +24,4 @@ venv/
 .env.postgres
 .env.rabbitmq
 ansible/vars/secrets.yml
+GET
